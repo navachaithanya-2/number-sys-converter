@@ -75,8 +75,3 @@ The converted number is 11001
 
 - Valid input must match the selected base.
 - Hexadecimal input accepts digits `0-9` and letters `A-F` (both uppercase and lowercase).
-- The program is designed for beginner-level learning and demonstrates manual conversion logic in C.
-
-## Author
-
-This project is a basic number system converter written in C for educational/practical use.
