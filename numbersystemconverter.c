@@ -1,50 +1,44 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int dectobin(int x){
-	if (x == 0){
-		return 0;
-	}
-	else if (x == 1){
-		return 1;
-	}
-	else{
-		return (x%2)+10*dectobin(x/2);
-	}
+char* dectobin(int x) {
+    static char bin[33];
+    int i = 0;
+    int j;
+    char temp;
+
+    if (x == 0) {
+        bin[0] = '0';
+        bin[1] = '\0';
+        return bin;
+    }
+
+    while (x > 0) {
+        bin[i++] = (char)((x % 2) + '0');
+        x /= 2;
+    }
+    bin[i] = '\0';
+
+    for (j = 0; j < i / 2; j++) {
+        temp = bin[j];
+        bin[j] = bin[i - j - 1];
+        bin[i - j - 1] = temp;
+    }
+    return bin;
 }
 
-int dectoocta(int x){
-	if (x==0){
-		return 0;
-	}
-	else if(x==1){
-		return 1;
-	}
-	else if(x==2){
-		return 2;
-	}
-	else if(x==3){
-		return 3;
-	}
-	else if(x==4){
-		return 4;
-	}
-	else if(x==5){
-		return 5;
-	}
-	else if(x==6){
-		return 6;
-	}
-	else if(x==7){
-		return 7;
-	}
-	else{
-		return (x%8)+10*dectoocta(x/8);
-	}
+int dectoocta(int x) {
+    if (x < 8) {
+        return x;
+    }
+    return (x % 8) + 10 * dectoocta(x / 8);
 }
 
 char* dectohexa(int x) {
     static char hex[33];
     int i = 0;
+    int j;
+    char temp;
 
     if (x == 0) {
         hex[0] = '0';
@@ -55,85 +49,58 @@ char* dectohexa(int x) {
     while (x > 0) {
         int rem = x % 16;
         if (rem < 10) {
-            hex[i++] = rem + '0';
+            hex[i++] = (char)(rem + '0');
         } else {
-            hex[i++] = rem - 10 + 'A';
+            hex[i++] = (char)(rem - 10 + 'A');
         }
         x /= 16;
     }
     hex[i] = '\0';
 
-    for (int j = 0; j < i / 2; j++) {
-        char temp = hex[j];
+    for (j = 0; j < i / 2; j++) {
+        temp = hex[j];
         hex[j] = hex[i - j - 1];
         hex[i - j - 1] = temp;
     }
-
     return hex;
 }
 
-int bintodec(int x){
-	if (x==0){
+int bintodec(int x) {
+    if (x == 0) 
 		return 0;
-	}
-	else if(x==1){
+    if (x == 1) 
 		return 1;
-	}
-	else{
-		return x%10 + 2*bintodec(x/10);
-	}
+    return (x % 10) + 2 * bintodec(x / 10);
 }
 
-int bintoocta(int x){
-	return dectoocta(bintodec(x));
+int bintoocta(int x) {
+    return dectoocta(bintodec(x));
 }
 
-int bintohexa(int x){
-	return dectohexa(bintodec(x));
+char* bintohexa(int x) {
+    return dectohexa(bintodec(x));
 }
 
-int octatodec(int x){
-	if (x==0){
-		return 0;
-	}
-	else if(x==1){
-		return 1;
-	}
-	else if(x==2){
-		return 2;
-	}
-	else if(x==3){
-		return 3;
-	}
-	else if(x==4){
-		return 4;
-	}
-	else if(x==5){
-		return 5;
-	}
-	else if (x==6){
-		return 6;
-	}
-	else if(x==7){
-		return 7;
-	}
-	else{
-		return x%10 + 8*octatodec(x/10);
-	}
+int octatodec(int x) {
+    if (x < 8) {
+        return x;
+    }
+    return (x % 10) + 8 * octatodec(x / 10);
 }
 
-int octatobin(int x){
-	return dectobin(octatodec(x));
+char* octatobin(int x) {
+    return dectobin(octatodec(x));
 }
 
-int octatohexa(int x){
-	return dectohexa(octatodec(x));
+char* octatohexa(int x) {
+    return dectohexa(octatodec(x));
 }
 
 int hexatodec(char *hex) {
     int dec = 0;
+    int i;
 
-    for (int i = 0; hex[i] != '\0'; i++) {
+    for (i = 0; hex[i] != '\0'; i++) {
         char ch = hex[i];
         int val;
 
@@ -149,11 +116,10 @@ int hexatodec(char *hex) {
 
         dec = dec * 16 + val;
     }
-
     return dec;
 }
 
-int hexatobin(char *x) {
+char* hexatobin(char *x) {
     return dectobin(hexatodec(x));
 }
 
@@ -161,116 +127,118 @@ int hexatoocta(char *x) {
     return dectoocta(hexatodec(x));
 }
 
-int main(){
-	int inputchoice, outputchoice;
-	
-	printf("===========================\n");
-	printf("  Number System Converter  \n");
-	printf("===========================\n");
-	
-	printf("Enter the Source Number System\n");
-	printf("1. Decimal(Base 10)\n2. Binary(Base 2)\n3. Octa(Base 8)\n4. Hexa(Base 16)\n");
-	printf("Enter choice(1-4):  ");
-	scanf("%d", &inputchoice);
-	
-	
-	
-	printf("Enter the Target Number System\n");
-	printf("1. Decimal(Base 10)\n2. Binary(Base 2)\n3. Octa(Base 8)\n4. Hexa(Base 16)\n");
-	printf("Enter choice(1-4):  ");
-	scanf("%d", &outputchoice);
-	
-	switch(inputchoice){
-		case 1:
-			int inputno;
-			printf("Enter the Number in the choosen System:  ");
-			scanf("%d", &inputno);
-			switch(outputchoice){
-				case 1:
-					printf("The input %d is already a Decimal", inputno);
+int main(void) {
+    int inputchoice, outputchoice;
+    int inputno;
+    char hexinput[20];
+
+    printf("===========================\n");
+    printf("  Number System Converter  \n");
+    printf("===========================\n");
+
+    printf("Enter the Source Number System\n");
+    printf("1. Decimal(Base 10)\n2. Binary(Base 2)\n3. Octal(Base 8)\n4. Hexadecimal(Base 16)\n");
+    printf("Enter choice(1-4): ");
+    if (scanf("%d", &inputchoice) != 1) return 1;
+
+    printf("Enter the Target Number System\n");
+    printf("1. Decimal(Base 10)\n2. Binary(Base 2)\n3. Octal(Base 8)\n4. Hexadecimal(Base 16)\n");
+    printf("Enter choice(1-4): ");
+    if (scanf("%d", &outputchoice) != 1) return 1;
+
+    switch(inputchoice) {
+        case 1:
+            printf("Enter Decimal number: ");
+            scanf("%d", &inputno);
+            switch(outputchoice) {
+                case 1: 
+					printf("Result: %d\n", inputno); 
 					break;
-				case 2:
-					printf("The converted number is %d", dectobin(inputno));
+                case 2: 
+					printf("Result: %s\n", dectobin(inputno)); 
 					break;
-				case 3:
-					printf("The converted number is %d", dectoocta(inputno));
+                case 3: 
+					printf("Result: %d\n", dectoocta(inputno)); 
 					break;
-				case 4:
-					printf("The converted number is %s", dectohexa(inputno));
+                case 4: 
+					printf("Result: %s\n", dectohexa(inputno)); 
 					break;
-				default:
-					printf("Invalid Input...");
+                default: 
+					printf("Invalid output choice.\n"); 
 					break;
-			}
-			break;
-		case 2:
-			int inputno;
-			printf("Enter the Number in the choosen System:  ");
-			scanf("%d", &inputno);
-			switch(outputchoice){
-				case 1:
-					printf("The converted number is %d", bintodec(inputno));
+            }
+            break;
+
+        case 2:
+            printf("Enter Binary number: ");
+            scanf("%d", &inputno);
+            switch(outputchoice) {
+                case 1: 
+					printf("Result: %d\n", bintodec(inputno)); 
 					break;
-				case 2:
-					printf("The input %d is already Binary", inputno);
+                case 2: 
+					printf("Result: %d\n", inputno); 
 					break;
-				case 3:
-					printf("The converted number is %d", bintoocta(inputno));
+                case 3: 
+					printf("Result: %d\n", bintoocta(inputno)); 
 					break;
-				case 4:
-					printf("The converted number is %s", bintohexa(inputno));
+                case 4: 
+					printf("Result: %s\n", bintohexa(inputno)); 
 					break;
-				default:
-					printf("Invalid Input...");
+                default: 
+					printf("Invalid output choice.\n"); 
 					break;
-			}
-			break;
-		case 3:
-			int inputno;
-			printf("Enter the Number in the choosen System:  ");
-			scanf("%d", &inputno);
-			switch(outputchoice){
-				case 1:
-					printf("The converted number is %d", octatodec(inputno));
+            }
+            break;
+
+        case 3:
+            printf("Enter Octal number: ");
+            scanf("%d", &inputno);
+            switch(outputchoice) {
+                case 1: 
+					printf("Result: %d\n", octatodec(inputno)); 
 					break;
-				case 2:
-					printf("The converted number is %d", octatobin(inputno));
+                case 2: 
+					printf("Result: %s\n", octatobin(inputno)); 
 					break;
-				case 3:
-					printf("The input %d is already Octadecimal", inputno);
+                case 3: 
+					printf("Result: %d\n", inputno); 
 					break;
-				case 4:
-					printf("The converted number is %s", octatohexa(inputno));
+                case 4: 
+					printf("Result: %s\n", octatohexa(inputno)); 
 					break;
-				default:
-					printf("Invalid Input...");
+                default: 
+					printf("Invalid output choice.\n"); 
 					break;
-			}
-			break;
-		case 4:
-			char inputno[20];
-			printf("Enter the Number in the choosen System:  ");
-			scanf("%s", inputno);
-			switch(outputchoice){
-				case 1:
-					printf("The converted number is %d", hexatodec(inputno));
+            }
+            break;
+
+        case 4:
+            printf("Enter Hexadecimal number: ");
+            scanf("%19s", hexinput);
+            switch(outputchoice) {
+                case 1: 
+					printf("Result: %d\n", hexatodec(hexinput)); 
 					break;
-				case 2:
-					printf("The converted number is %d", hexatobin(inputno));
+                case 2: 
+					printf("Result: %s\n", hexatobin(hexinput)); 
 					break;
-				case 3:
-					printf("The converted number is %d", hexatoocta(inputno));
+                case 3: 
+					printf("Result: %d\n", hexatoocta(hexinput)); 
 					break;
-				case 4:
-					printf("The input %s is already Hexadecimal", inputno);
+                case 4: 
+					printf("Result: %s\n", hexinput); 
 					break;
-				default:
-					printf("Invalid Inmput...");
+                default: 
+					printf("Invalid output choice.\n"); 
 					break;
-			}
-			break;
-		default:
-			printf("Invalid Input...");
-			break;
-	}
+            }
+            break;
+
+        default:
+            printf("Invalid source choice.\n");
+            break;
+    }
+
+    return 0;
 }
