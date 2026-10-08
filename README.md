@@ -1,51 +1,45 @@
 # Number System Converter
 
-A simple C program that converts numbers between different number systems using a command-line menu.
+A simple C program that converts numbers between different number systems.
 
-## Features
+## Project Overview
 
-- Decimal to Binary
-- Decimal to Octal
-- Decimal to Hexadecimal
-- Binary to Decimal
-- Binary to Octal
-- Binary to Hexadecimal
-- Octal to Decimal
-- Octal to Binary
-- Octal to Hexadecimal
-- Hexadecimal to Decimal
-- Hexadecimal to Binary
-- Hexadecimal to Octal
-
-## Supported Number Systems
+This project provides a console-based number converter that supports:
 
 - Decimal (Base 10)
 - Binary (Base 2)
 - Octal (Base 8)
 - Hexadecimal (Base 16)
 
+It allows conversion from one base to another and is useful for learning number system conversions in C.
+
+## Features
+
+- Convert decimal to binary, octal, and hexadecimal
+- Convert binary to decimal, octal, and hexadecimal
+- Convert octal to decimal, binary, and hexadecimal
+- Convert hexadecimal to decimal, binary, and octal
+- Interactive menu-driven interface
+
+## File
+
+- `numbersystemconverter.c` - Main program source code
+
 ## How to Run
 
-### Linux / macOS
+### Using GCC (Linux/macOS)
 
 ```bash
-gcc numbersystemconverter.c -o numbersystemconverter
-./numbersystemconverter
+gcc numbersystemconverter.c -o numberconverter
+./numberconverter
 ```
 
-### Windows (MinGW / GCC)
+### Using GCC on Windows (MinGW / Git Bash)
 
 ```bash
-gcc numbersystemconverter.c -o numbersystemconverter.exe
-numbersystemconverter.exe
+gcc numbersystemconverter.c -o numberconverter.exe
+./numberconverter.exe
 ```
-
-## Usage
-
-1. Choose the source number system.
-2. Choose the target number system.
-3. Enter the number to convert.
-4. The program displays the converted result.
 
 ## Example
 
@@ -56,22 +50,23 @@ numbersystemconverter.exe
 Enter the Source Number System
 1. Decimal(Base 10)
 2. Binary(Base 2)
-3. Octa(Base 8)
-4. Hexa(Base 16)
-Enter choice(1-4):  1
-
+3. Octal(Base 8)
+4. Hexadecimal(Base 16)
+Enter choice(1-4): 1
 Enter the Target Number System
 1. Decimal(Base 10)
 2. Binary(Base 2)
-3. Octa(Base 8)
-4. Hexa(Base 16)
-Enter choice(1-4):  2
-
-Enter the Number in the choosen System:  25
-The converted number is 11001
+3. Octal(Base 8)
+4. Hexadecimal(Base 16)
+Enter choice(1-4): 2
+Enter Decimal number: 10
+Result: 1010
 ```
 
 ## Notes
 
-- Valid input must match the selected base.
-- Hexadecimal input accepts digits `0-9` and letters `A-F` (both uppercase and lowercase).
+This program uses basic arithmetic and string conversion methods to convert between numeral systems.
+
+## Author
+
+Built as a C programming practice project.
